@@ -2,7 +2,8 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 5.82.0"
+      # Changed to ~> 6.0 to match EKS Module v21 requirements
+      version = "~> 6.0" 
     }
 
     random = {
@@ -11,7 +12,7 @@ terraform {
     }
 
     tls = {
-      source  = "hashicorp/tls" ##
+      source  = "hashicorp/tls"
       version = "~> 4.0.6"
     }
 
@@ -22,7 +23,7 @@ terraform {
 
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = "~> 2.35.0" ##
+      version = "~> 2.35.0"
     }
   }
 
