@@ -1,8 +1,10 @@
 terraform {
+  required_version = ">= 1.10.0"
+
   required_providers {
     aws = {
-      source = "hashicorp/aws"
-      # Changed to ~> 6.0 to match EKS Module v21 requirements
+      source  = "hashicorp/aws"
+      # Matches EKS Module v21 requirements
       version = "~> 6.0"
     }
 
@@ -12,7 +14,7 @@ terraform {
     }
 
     tls = {
-      source  = "hashicorp/tls" ##
+      source  = "hashicorp/tls"
       version = "~> 4.0.6"
     }
 
@@ -28,11 +30,10 @@ terraform {
   }
 
   backend "s3" {
-    bucket  = "vprofileactionskube"
-    key     = "terraform.tfstate"
-    region  = "us-east-1"
-    encrypt = true
+    bucket         = "vprofileactionskube"
+    key            = "terraform.tfstate"
+    region         = "us-east-1"
+    encrypt        = true
+    dynamodb_table = "terraform-state-lock" # ADDED: Crucial for state locking
   }
-
-  required_version = ">= 1.10.0"
 }
