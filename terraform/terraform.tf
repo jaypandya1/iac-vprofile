@@ -30,9 +30,9 @@ terraform {
   }
 
   backend "s3" {
-    bucket         = "vprofileactionskube"
-    key            = "terraform.tfstate"
-    region         = "us-east-1"
-    encrypt        = true
+    bucket  = "vprofileactionskube"
+    key     = "terraform.tfstate"
+    region  = "us-east-1"
+    encrypt = true
   }
 }

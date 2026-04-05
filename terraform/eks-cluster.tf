@@ -1,6 +1,6 @@
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "~> 21.16.0" 
+  version = "~> 21.16.0"
 
   # Directly referencing the variable you defined
   cluster_name    = var.clusterName
