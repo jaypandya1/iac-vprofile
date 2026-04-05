@@ -34,7 +34,7 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: 1.6.3  # Fixes the version mismatch error
+          terraform_version: 1.14.8 # Fixes the version mismatch error
 
       - name: Terraform init
         id: init
