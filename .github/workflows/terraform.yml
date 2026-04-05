@@ -28,7 +28,6 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v4
 
-      # MOVED: Configure AWS securely before running Terraform
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4.0.2
         with:
@@ -39,10 +38,9 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3.1.2 
         with:
-          terraform_version: "1.14.6" # Current stable 2026 release
-          terraform_wrapper: true
+          terraform_version: "1.14.6" 
+          terraform_wrapper: false # FIXED: Turned off to prevent planfile corruption
 
-      # FIXED: Corrected YAML indentation here
       - name: Terraform Init -upgrade
         id: init
         run: terraform init -upgrade -backend-config="bucket=$BUCKET_TF_STATE"
@@ -69,13 +67,13 @@ jobs:
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve -input=false planfile
 
+      # FIXED: Unified the conditional logic for all post-apply steps
       - name: Update Kubeconfig
-        if: steps.apply.outcome == 'success' || github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: aws eks update-kubeconfig --region ${{ env.AWS_REGION }} --name ${{ env.EKS_CLUSTER }} 
 
       - name: Install Ingress Controller
-        if: steps.apply.outcome == 'success' || github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
-          # Note: Switched to the maintained 2026 community manifest
           kubectl apply -f https://raw.githubusercontent.com/nginxinc/kubernetes-ingress/main/deployments/common/ns-and-sa.yaml
           kubectl apply -f https://raw.githubusercontent.com/nginxinc/kubernetes-ingress/main/deployments/deployment/nginx-ingress.yaml
