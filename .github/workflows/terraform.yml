@@ -32,9 +32,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
+        uses: hashicorp/setup-terraform@v4
         with:
-          terraform_version: 1.14.8 # Fixes the version mismatch error
+          terraform_version: 1.14.8
 
       - name: Terraform init
         id: init
@@ -63,7 +63,7 @@ jobs:
         run: terraform apply -auto-approve -input=false planfile
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
