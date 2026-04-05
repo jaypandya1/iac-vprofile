@@ -1,9 +1,9 @@
 terraform {
   required_providers {
     aws = {
-      source  = "hashicorp/aws"
+      source = "hashicorp/aws"
       # Changed to ~> 6.0 to match EKS Module v21 requirements
-      version = "~> 6.0" 
+      version = "~> 6.0"
     }
 
     random = {
