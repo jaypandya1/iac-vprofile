@@ -2,7 +2,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 5.82.0" # Latest stable v5
+      version = "~> 5.82.0"
     }
 
     random = {
@@ -27,13 +27,11 @@ terraform {
   }
 
   backend "s3" {
-    bucket         = "vprofileactionskube"
-    key            = "terraform.tfstate"
-    region         = "us-east-1"
-    encrypt        = true
-    # dynamodb_table = "your-lock-table" # Highly recommended for CI/CD
+    bucket  = "vprofileactionskube"
+    key     = "terraform.tfstate"
+    region  = "us-east-1"
+    encrypt = true
   }
 
-  # Changed to a stable version that exists in 2026
-  required_version = ">= 1.10.0" 
+  required_version = ">= 1.10.0"
 }
